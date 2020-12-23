@@ -1,3 +1,3 @@
 function Y = ZtoY(Z)
-Y = inv(Z)
+Y = inv(Z);
 end
