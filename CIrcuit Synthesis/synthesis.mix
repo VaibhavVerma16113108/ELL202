@@ -1,0 +1,37 @@
+syms s
+n= (2*s^4 + 31*s^3+30*s^2+14*s+4)
+d=(9*s^3+2*s^2+2*s)
+z= n/d
+z=simplify(z-2/s)
+[n, d]= numden(z)
+z=simplify(z-2*s/9)
+[n, d]= numden(z)
+b=sym2poly(n)
+a=sym2poly(d)
+[r, p, k]= residue(b, a)
+syms w
+assume(w, 'real')
+Zjw = real(subs(z, s, 1i*w))
+[x, rmin]=fminbnd(matlabFunction(Zjw), 0, 10)
+rmin=round(rmin, 2)
+x=double(x)
+z=simplify(z-rmin)
+X=imag(double(subs(z, s, 1i*x)))
+l1=X/x
+z=z-s*l1
+y=1/z
+[n, d]= numden(y)
+[r, p, k]= residue(sym2poly(n), sym2poly(d))
+k=real(r(1))
+c=2*k/(x^2)
+l2= round(1/(2*k), 2)
+y=y-1/(s*l2+1/(s*c))
+z=1/y
+l3= double(limit(matlabFunction(z/s), s, inf))
+l2+l3
+l1+l2
+[n, d]= numden(z)
+[r, p, k]= residue(sym2poly(n), sym2poly(d))
+
+
+
