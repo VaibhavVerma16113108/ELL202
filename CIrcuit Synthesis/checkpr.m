@@ -1,4 +1,4 @@
-function ok = checkpr(b, a)
+function [ok, realpart] = checkpr(b, a)
     ok = true;
     [r,p,k] = residue(b,a);
     for i = 1 : length(p)
@@ -13,7 +13,7 @@ function ok = checkpr(b, a)
     num = poly2sym(b, s);
     den = poly2sym(a, s);
     g = num / den;
-    assume(s, 'positive');
+    assume(s, 'real');
     s = j*s;
     g = subs(g, s);
     g = simplify(g);
